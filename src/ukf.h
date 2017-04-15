@@ -68,6 +68,9 @@ public:
   double lambda_;
 
 
+  // previous timestamp
+  long previous_timestamp_;
+
   /**
    * Constructor
    */
