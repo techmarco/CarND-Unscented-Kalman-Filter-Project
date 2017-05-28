@@ -66,10 +66,6 @@ UKF::UKF() {
   weights_(0) = lambda_ / (lambda_+n_aug_);
   for (int i=1; i<2*n_aug_+1; i++)
     weights_(i) = 0.5 / (lambda_+n_aug_);
-
-  // normalized innovation squared
-  NIS_radar_ = 0;
-  NIS_laser_ = 0;
 }
 
 UKF::~UKF() {}
@@ -288,8 +284,6 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
 
   x_ += K * zdiff;
   P_ -= K * S * K.transpose();
-
-  NIS_laser_ = zdiff.transpose() * S.inverse() * zdiff;
 }
 
 /**
@@ -377,6 +371,4 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
   // output updated state and state covariance matrix
   x_ += K * zdiff;
   P_ -= K * S * K.transpose();
-
-  NIS_radar_ = zdiff.transpose() * S.inverse() * zdiff;
 }
